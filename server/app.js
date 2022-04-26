@@ -3,8 +3,9 @@ const express = require('express')
 const port = 4000
 const app = express()
 const cors = require('cors')
+const schema = require('./schema/schema')
 const config = require('./config/config')
-const user_routes = require('./routers/users')
+const user_routes = require('./routers/user')
 const { graphqlHTTP } = require('express-graphql');
 const { graphql } = require('graphql')
 // const post_routes = require('./Routers/posts')
@@ -36,10 +37,10 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 
-app.use(passport.initialize());
+
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/api/user/', user_routes)
+// app.use('/api/user/', user_routes)
