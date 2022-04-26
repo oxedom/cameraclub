@@ -13,7 +13,7 @@ const PostType = new GraphQLObjectType({
         id: { type: GraphQLID },
         userid: { type: GraphQLID},
         img: { type: GraphQLString },
-        name: { type: GraphQLString },
+        text: { type: GraphQLString },
         comment: { type: new GraphQLList(CommentType), 
             resolve(parent, args) { 
             return Comment.find({userid: parent.id})
@@ -28,7 +28,7 @@ const CommentType = new GraphQLObjectType(
         fields: () => ({
             id: { type: GraphQLID},
             userid: { type: GraphQLID},
-            Text: { type: GraphQLString},
+            text: { type: GraphQLString},
             likes: { type: GraphQLInt}
             
         })
