@@ -27,4 +27,4 @@ const strategy = new JwtStrategy(options, (payload, done) => {
 // app.js will pass the global passport object here, and this function will configure it
 module.exports = (passport) => {
   // The JWT payload is passed into the verify callback
-  passport.use(strategy);
+  passport.use(strategy)}

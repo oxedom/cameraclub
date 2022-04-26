@@ -88,8 +88,8 @@ function authMiddleware(req, res, next) {
   
 }
 
-module.exports = { validPassword, genPassword ,issueJWT, authMiddleware}
-// module.exports.validPassword = validPassword;
-// module.exports.genPassword = genPassword;
-// module.exports.issueJWT = issueJWT;
-// module.exports.authMiddleware = authMiddleware;
+// module.exports = { validPassword, genPassword ,issueJWT, authMiddleware}
+module.exports.validPassword = validPassword;
+module.exports.genPassword = genPassword;
+module.exports.issueJWT = issueJWT;
+module.exports.authMiddleware = authMiddleware;
