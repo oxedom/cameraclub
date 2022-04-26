@@ -28,4 +28,3 @@ const strategy = new JwtStrategy(options, (payload, done) => {
 module.exports = (passport) => {
   // The JWT payload is passed into the verify callback
   passport.use(strategy);
-};
