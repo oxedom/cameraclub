@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "crypto": "^1.0.1",
-    "fs": "^0.0.1-security",
-    "jsonwebtoken": "^8.5.1"
-  }
-}
