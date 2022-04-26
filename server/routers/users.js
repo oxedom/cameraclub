@@ -3,7 +3,7 @@ const UserBL = require("../bl/userBL");
 const router = express.Router();
 const User = require("../models/userModel.js");
 const passport = require("passport");
-const utils = require("../lib/utils");
+const utils = require("../lib/utlis")
 
 router.get(
   "/protected",

@@ -5,7 +5,7 @@ const app = express()
 const cors = require('cors')
 const schema = require('./schema/schema')
 const config = require('./config/config')
-const user_routes = require('./routers/user')
+const user_routes = require('./routers/users')
 const { graphqlHTTP } = require('express-graphql');
 const { graphql } = require('graphql')
 // const post_routes = require('./Routers/posts')
@@ -43,4 +43,4 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors())
 
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/api/user/', user_routes)
+app.use('/api/user/', user_routes)
