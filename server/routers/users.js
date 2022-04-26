@@ -61,13 +61,14 @@ router.post("/register", function (req, res, next) {
   const saltHash = utils.genPassword(req.body.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
+  const date = new Date().getTime() 
   const newUser = new User({
     username: req.body.username,
     hash: hash,
     salt: salt,
     email: req.body.email,
     birthday: req.body.birthday,
-    accountCreation: new Date().getTime(),
+    accountCreation: date,
   });
 
   try {
