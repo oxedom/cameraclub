@@ -5,7 +5,8 @@ const app = express()
 const cors = require('cors')
 const config = require('./config/config')
 const user_routes = require('./routers/users')
-
+const { graphqlHTTP } = require('express-graphql');
+const { graphql } = require('graphql')
 // const post_routes = require('./Routers/posts')
 
 //KEVINS WORK
@@ -29,7 +30,10 @@ db.on("error", console.error.bind(console, "mongo connection error"))
 //KEVINS WORK
 // require('./Config/passport')(passport);
 
-
+app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true
+}));
 
 
 app.use(passport.initialize());
