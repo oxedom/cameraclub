@@ -1,4 +1,3 @@
-const { type } = require('express/lib/response');
 const Comment = require('../models/commentModel')
 const User = require('../models/userModel')
 const Post = require('../models/postModel')
@@ -14,9 +13,9 @@ const PostType = new GraphQLObjectType({
         userid: { type: GraphQLID},
         img: { type: GraphQLString },
         text: { type: GraphQLString },
-        comment: { type: new GraphQLList(CommentType), 
+        comments: { type: new GraphQLList(CommentType), 
             resolve(parent, args) { 
-            return Comment.find({userid: parent.id})
+            return Comment.find({userid: parent.userid})
         }
         }
     })

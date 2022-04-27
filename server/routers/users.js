@@ -6,9 +6,6 @@ const passport = require("passport");
 
 router.get( "/protected",passport.authenticate("jwt", { session: false }),(req, res, next) => 
 {
-  //THIS LOGIC NEEDS TO BE IN BL
-  //let data = await logic.getProtected
-  //return res.json(data)
     res.status(200).json({
       success: true,
       msg: "You are successfully authenticated to this route!",
