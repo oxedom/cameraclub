@@ -2,9 +2,7 @@ const express = require("express");
 const userBL = require("../bl/userBL");
 const authBL = require("../bl/authBL")
 const router = express.Router();
-const User = require("../models/userModel.js");
 const passport = require("passport");
-const utils = require("../lib/utlis")
 
 router.get( "/protected",passport.authenticate("jwt", { session: false }),(req, res, next) => 
 {
@@ -22,17 +20,17 @@ router.get( "/protected",passport.authenticate("jwt", { session: false }),(req, 
 );
 
 // Validate an existing user and issue a JWT
-router.post("/login", function (req, res, next) {
+router.post("/login", async (req, res) => {
 
-  let data = await logic.login(req.body)
+  let data = await authBL.login(req.body)
   return res.json(data)
   
 });
 
 // Register a new subscriber
-router.post("/register", function (req, res, next) {
+router.post("/register", async (req, res) => {
     //THIS LOGIC NEEDS TO BE IN BL
-  let data = await logic.register(req.body)
+  let data = await authBL.register(req.body)
   return res.json(data)
 
   

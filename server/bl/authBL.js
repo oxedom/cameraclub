@@ -1,5 +1,4 @@
 const User = require("../models/userModel.js");
-const passport = require("passport");
 const utils = require("../lib/utlis")
 
 const login = (loginObj) => {
@@ -32,17 +31,17 @@ const register = (registerObj) => {
 
     return new Promise((resolve, reject) => {
 
-    const saltHash = utils.genPassword(req.body.password);
+    const saltHash = utils.genPassword(registerObj.password);
     const salt = saltHash.salt;
     const hash = saltHash.hash;
     const date = new Date().getTime() 
 
     const newUser = new User({
-      username: req.body.username,
+      username: registerObj.username,
       hash: hash,
       salt: salt,
-      email: req.body.email,
-      birthday: req.body.birthday,
+      email: registerObj.email,
+      birthday: registerObj.birthday,
       accountCreation: date,
     });
   
