@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 
-const getAll = () => {
+const getAllUsers = () => {
   return new Promise((resolve, reject) => {
     User.find({}, function (err, data) {
       if (err) {
@@ -12,7 +12,7 @@ const getAll = () => {
   });
 };
 
-const getById = (id) => {
+const getUserById = (id) => {
   return new Promise((resolve, reject) => {
     User.findById(id, (err, data) => {
       if (err) {
@@ -49,4 +49,4 @@ const deleteUserById = (id) => {
     })
 }
 
-module.exports = { getAll, getById, updateUserById, deleteUserById };
+module.exports = { getAllUsers, getUserById, updateUserById, deleteUserById };

@@ -29,7 +29,8 @@ const CommentType = new GraphQLObjectType(
             id: { type: GraphQLID},
             userid: { type: GraphQLID},
             text: { type: GraphQLString},
-            likes: { type: GraphQLInt}
+            likes: { type: GraphQLInt},
+            postid: { type: GraphQLID}
             
         })
     }
@@ -56,26 +57,48 @@ const Mutation = new GraphQLObjectType({
                     comments: [],
                     date: new Date().getTime()
                 })
-                return newAuthor.save()
+                return newPost.save()
+
+                .then( post => {
+                    User.findByIdAndUpdate(args.userid, { $push: {"posts":  post.id}},
+                        {safe: true, upsert: false}, (err,model) => {
+                            if(err) { throw Error(`PROBLEM with findAndUpdate 
+                            GraphQL inserting post ID in array of POSTS`)} 
+                            else { console.log(`Sucesss, pushed post ID to User posts Arr (${post.id}`)} 
+                            }
+                         )
+                        }
+                      )
              }},
         addComment: {
             type: CommentType,
             args: {
                 userid:  { type: new GraphQLNonNull(GraphQLID)},
+                postid:  { type: new GraphQLNonNull(GraphQLID)},
                 text: { type: new GraphQLNonNull(GraphQLString)}
             },
             resolve(parent, args) {
-                let newComment = new Comment(
-                    { userid: args.userid, 
-                    text: args.text, likes: 0, 
-                    date: new Date().getTime() })
-                     newComment.save()
-                     .then( comment => {
-                    User.findByIdAndUpdate.then(user =>
-                        {
-                            user.comments.push(newComment.id)
-                            user.save()
-                        })
+                let newComment = new Comment({ 
+                    
+                    userid: args.userid, 
+                    text: args.text, 
+                    likes: 0, 
+                    postid: args.postid,
+                    date: new Date().getTime() 
+
+                    })
+
+                    return newComment.save()
+                    .then( comment => {
+                Post.findByIdAndUpdate(args.postid, { $push: {"comments":  comment.id}},
+                    {safe: true, upsert: false}, (err,model) => {
+                        if(err) { throw Error(`PROBLEM with findAndUpdate 
+                        GraphQL inserting comment in array of comments`)} 
+                        else { console.log(`Sucesss, updated Post Comment Arr with new comment id (${comment.id}) ` )}
+                    }
+                    
+                    )
+
                      })
             }
         }
@@ -111,4 +134,4 @@ const RootQuery = new GraphQLObjectType({
 
 
 
-module.exports = new graphql.GraphQLSchema({ query: RootQuery})
+module.exports = new graphql.GraphQLSchema({ query: RootQuery, mutation: Mutation}, )
