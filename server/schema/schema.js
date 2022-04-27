@@ -6,6 +6,7 @@ const graphql = require('graphql')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema , GraphQLInt, GraphQLID, GraphQLList, GraphQLNonNull} = graphql; 
  
+//Defening a POST TYPE for GraphQL
 const PostType = new GraphQLObjectType({
     name: 'Post',
     fields: () => ({
@@ -21,6 +22,7 @@ const PostType = new GraphQLObjectType({
     })
 });
 
+//Defening a Comment TYPE for GraphQL
 const CommentType = new GraphQLObjectType(
     {
         name: 'Comment',
@@ -35,9 +37,12 @@ const CommentType = new GraphQLObjectType(
     }
 ) 
 
+//Defening Mution for GraphQL CRUD ACTIONS 
+
 const Mutation = new GraphQLObjectType({
     name: 'Mutation', 
     fields: {
+        //ADD  A POST CRUD ACTION 
         addPost: {
              type: PostType, 
             args: {
@@ -69,6 +74,7 @@ const Mutation = new GraphQLObjectType({
                         }
                       )
              }},
+    //ADD  A COMMENT CRUD ACTION 
         addComment: {
             type: CommentType,
             args: {
@@ -95,7 +101,6 @@ const Mutation = new GraphQLObjectType({
                         GraphQL inserting comment in array of comments`)} 
                         else { console.log(`Sucesss, updated Post Comment Arr with new comment id (${comment.id}) ` )}
                     }
-                    
                     )
 
                      })

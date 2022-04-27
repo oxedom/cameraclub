@@ -16,7 +16,7 @@ router.get( "/protected",passport.authenticate("jwt", { session: false }),(req, 
   }
 );
 
-// Validate an existing user and issue a JWT
+// Validate an existing user and issue a JWT endpoint
 router.post("/login", async (req, res) => {
 
   let data = await authBL.login(req.body)
@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
   
 });
 
-// Register a new subscriber
+// Register a new subscriber endpoint
 router.post("/register", async (req, res) => {
     //THIS LOGIC NEEDS TO BE IN BL
   let data = await authBL.register(req.body)
@@ -33,13 +33,14 @@ router.post("/register", async (req, res) => {
   
 });
 
+//GET ALL USERS endpoint
 router.get("/",passport.authenticate("jwt", { session: false }), async function (req, resp) {
     let data = await userBL.getAllUsers();
     return resp.json(data);
   }
 );
 
-//GET get user info by ID
+//GET get user info by ID endpoint
 router.get("/:id",passport.authenticate("jwt", { session: false }), async function (req, resp) {
     let id = req.params.id;
     let data = await userBL.getUserById(id);
