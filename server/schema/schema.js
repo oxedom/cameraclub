@@ -35,38 +35,52 @@ const CommentType = new GraphQLObjectType(
     }
 ) 
 
-// const Mutation = new GraphQLObjectType({
-//     name: 'Mutation', 
-//     fields: {
-//         addAuthor: {
-//              type: AuthorType, 
-//             args: {
-//                 name: { type: new GraphQLNonNull(GraphQLString)},
-//                 age: {  type: new GraphQLNonNull(GraphQLInt)}
-//             },
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation', 
+    fields: {
+        addPost: {
+             type: PostType, 
+            args: {
+                userid:  { type: new GraphQLNonNull(GraphQLID)},
+                text:  { type: new GraphQLNonNull(GraphQLString)},
+                img:  { type: new GraphQLNonNull(GraphQLString)},
+                age: {  type: new GraphQLNonNull(GraphQLInt)}
+            },
         
-//             resolve(parent, args){
+            resolve(parent, args){
              
-//                 let newAuthor = new Author({
-//                     name: args.name,
-//                     age: args.age
-//                 })
-//                 return newAuthor.save()
-//              }},
-//         addBook: {
-//             type: BookType,
-//             args: {
-//                 name :  { type: new GraphQLNonNull(GraphQLString)},
-//                 genre: { type: new GraphQLNonNull(GraphQLString)},
-//                 authorID :  { type: new GraphQLNonNull(GraphQLID)}
-//             },
-//             resolve(parent, args) {
-//                 let newBook = new Book({ name: args.name, genre: args.genre, authorID: args.authorID })
-//                 return newBook.save()
-//             }
-//         }
-//     }
-// })
+                let newPost = new Post({
+                    userid: args.userid,
+                    text: args.text,
+                    img: args.img,
+                    comments: [],
+                    date: new Date().getTime()
+                })
+                return newAuthor.save()
+             }},
+        addComment: {
+            type: CommentType,
+            args: {
+                userid:  { type: new GraphQLNonNull(GraphQLID)},
+                text: { type: new GraphQLNonNull(GraphQLString)}
+            },
+            resolve(parent, args) {
+                let newComment = new Comment(
+                    { userid: args.userid, 
+                    text: args.text, likes: 0, 
+                    date: new Date().getTime() })
+                     newComment.save()
+                     .then( comment => {
+                    User.findByIdAndUpdate.then(user =>
+                        {
+                            user.comments.push(newComment.id)
+                            user.save()
+                        })
+                     })
+            }
+        }
+    }
+})
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
