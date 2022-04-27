@@ -23,7 +23,4 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/user/', user_routes)
-app.use('/graphql', graphqlHTTP({
-    schema,
-    graphiql: true
-}));
+app.use('/graphql', graphqlHTTP({ schema, graphiql: true}));

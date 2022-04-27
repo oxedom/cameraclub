@@ -1,6 +1,7 @@
 const User = require("../models/userModel.js");
 const utils = require("../lib/utlis")
 
+//Takes in loginObj username and password
 const login = (loginObj) => {
     return new Promise ((resolve, reject)=> {
     User.findOne({ username: loginObj.username }, (err, user) => {
@@ -48,7 +49,7 @@ const register = (registerObj) => {
     try {
       newUser.save().then((user) => {
         const jwt = utils.issueJWT(user);
-        //KEVIN LOOK AT THIS
+   
         resolve({
           success: true,
           user: user,
@@ -56,12 +57,13 @@ const register = (registerObj) => {
           expiresIn: jwt.expires,
         });
       });
-    } catch (err) {
-             //KEVIN LOOK AT THIS
-      reject(err)
-    }
+    } catch (err) { reject(err) }
      })
 
 }
+
+
+
+
 
 module.exports = { login, register};

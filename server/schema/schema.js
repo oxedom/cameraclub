@@ -1,4 +1,3 @@
-const { type } = require('express/lib/response');
 const Comment = require('../models/commentModel')
 const User = require('../models/userModel')
 const Post = require('../models/postModel')
@@ -7,6 +6,7 @@ const graphql = require('graphql')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema , GraphQLInt, GraphQLID, GraphQLList, GraphQLNonNull} = graphql; 
  
+//Defening a POST TYPE for GraphQL
 const PostType = new GraphQLObjectType({
     name: 'Post',
     fields: () => ({
@@ -14,14 +14,15 @@ const PostType = new GraphQLObjectType({
         userid: { type: GraphQLID},
         img: { type: GraphQLString },
         text: { type: GraphQLString },
-        comment: { type: new GraphQLList(CommentType), 
+        comments: { type: new GraphQLList(CommentType), 
             resolve(parent, args) { 
-            return Comment.find({userid: parent.id})
+            return Comment.find({userid: parent.userid})
         }
         }
     })
 });
 
+//Defening a Comment TYPE for GraphQL
 const CommentType = new GraphQLObjectType(
     {
         name: 'Comment',
@@ -36,9 +37,12 @@ const CommentType = new GraphQLObjectType(
     }
 ) 
 
+//Defening Mution for GraphQL CRUD ACTIONS 
+
 const Mutation = new GraphQLObjectType({
     name: 'Mutation', 
     fields: {
+        //ADD  A POST CRUD ACTION 
         addPost: {
              type: PostType, 
             args: {
@@ -70,6 +74,7 @@ const Mutation = new GraphQLObjectType({
                         }
                       )
              }},
+    //ADD  A COMMENT CRUD ACTION 
         addComment: {
             type: CommentType,
             args: {
@@ -87,7 +92,7 @@ const Mutation = new GraphQLObjectType({
                     date: new Date().getTime() 
 
                     })
-
+                    //IS THIS GOOD PRACTICE?
                     return newComment.save()
                     .then( comment => {
                 Post.findByIdAndUpdate(args.postid, { $push: {"comments":  comment.id}},
@@ -96,7 +101,6 @@ const Mutation = new GraphQLObjectType({
                         GraphQL inserting comment in array of comments`)} 
                         else { console.log(`Sucesss, updated Post Comment Arr with new comment id (${comment.id}) ` )}
                     }
-                    
                     )
 
                      })
