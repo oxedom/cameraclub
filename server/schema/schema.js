@@ -92,7 +92,7 @@ const Mutation = new GraphQLObjectType({
                     date: new Date().getTime() 
 
                     })
-
+                    //IS THIS GOOD PRACTICE?
                     return newComment.save()
                     .then( comment => {
                 Post.findByIdAndUpdate(args.postid, { $push: {"comments":  comment.id}},
