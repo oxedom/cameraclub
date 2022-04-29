@@ -7,8 +7,8 @@ const userSchema = mongoose.Schema(
         email: { type: String},
         birthday: Number,
         posts: { type: Array, postID: String},
-        hash : String,
-        salt: String,
+        hash : {type : String, select : false},
+        salt: {type : String, select : false},
         accountCreation: Number
     }
 )
