@@ -22,6 +22,7 @@ const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8');
  * the decrypted hash/salt with the password that the user provided at login
  */
 function validPassword(password, hash, salt) {
+    var password = toString(password)
     var hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
     return hash === hashVerify;
 }
@@ -37,15 +38,16 @@ function validPassword(password, hash, salt) {
  * You would then store the hashed password in the database and then re-hash it to verify later (similar to what we do here)
  */
 function genPassword(password) {
+    var password  = toString(password)
     var salt = crypto.randomBytes(32).toString('hex');
     var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
-    
+    console.log ("salt:"+salt, "hash:"+genHash)
+
     return {
       salt: salt,
       hash: genHash
     };
 }
-
 
 /**
  * @param {*} user - The user object.  We need this to set the JWT `sub` payload property to the MongoDB user ID
