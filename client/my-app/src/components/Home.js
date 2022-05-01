@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-
+import Post from './Post'
 import UserService from "../services/user.service";
 import AddPost from "./AddPost";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  // useQuery,
+  gql
+} from "@apollo/client";
+
+
 
 const Home = () => {
-  const [content, setContent] = useState("");
-  client
-  .query({
-    query: gql`
-    query{
-      posts {
-        id
-        text
-      } 
-      }  `
-  })
-  .then(result => console.log(result))
+
+
+
   
   
   const [Users, setUsers] = useState([]);
@@ -41,9 +41,9 @@ const Home = () => {
   return (
     <div className="container">
       <header className="jumbotron">
-        <h3>{content}</h3>
-        <Post> </Post>
-        <AddPost></AddPost>
+
+        <Post></Post>
+        {/* <AddPost></AddPost> */}
        Users: {Users.map((user)=>{return <div key={user._id}> {user.username}</div>})}
       </header>
     </div>

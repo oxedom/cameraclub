@@ -14,8 +14,8 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
-  gql
+  // useQuery,
+  // gql
 } from "@apollo/client";
 
 const client = new ApolloClient({
@@ -25,19 +25,7 @@ const client = new ApolloClient({
 
 
 
-client
-  .query({
-    query: gql`
-    query{
-      posts {
-        id
-        text
-      } 
-      }
-      
-    `
-  })
-  .then(result => console.log(result))
+
 
 
 
@@ -45,12 +33,14 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
 
- 
     <BrowserRouter>
     {/* //Store conection string */}
-    <Provider store={store}>
+
+<ApolloProvider client={client}> 
+     <Provider store={store}>
     <App />  
      </Provider>
+</ApolloProvider>
     </BrowserRouter>
 
 
