@@ -6,10 +6,9 @@ const login = (loginObj) => {
     return new Promise ((resolve, reject)=> {
     User.findOne({ username: loginObj.username }, (err, user) => {
         if(err) { 
-          console.log(err)
-          reject(err)}
+          reject(err,console.log(err + "User not found"))}
         else {
-          console.log(loginObj)
+ 
           let password = toString(loginObj.password)
           let hash = user.hash
           let salt = user.salt
