@@ -41,7 +41,7 @@ function genPassword(password) {
     var password  = toString(password)
     var salt = crypto.randomBytes(32).toString('hex');
     var genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
-    console.log ("salt:"+salt, "hash:"+genHash)
+
 
     return {
       salt: salt,
