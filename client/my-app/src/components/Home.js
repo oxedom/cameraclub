@@ -13,15 +13,19 @@ const Home = () => {
         id
         text
       } 
-      }
-      
-    `
+      }  `
   })
   .then(result => console.log(result))
+  
+  
+  const [Users, setUsers] = useState([]);
+
+
   useEffect(() => {
     UserService.getPublicContent().then(
       (response) => {
-        setContent(response.data);
+        setUsers(response.data)
+        ;
       },
       (error) => {
         const _content =
@@ -29,10 +33,10 @@ const Home = () => {
           error.message ||
           error.toString();
 
-        setContent(_content);
+        setUsers(_content);
       }
     );
-  }, []);
+  });
 
   return (
     <div className="container">
@@ -40,6 +44,7 @@ const Home = () => {
         <h3>{content}</h3>
         <Post> </Post>
         <AddPost></AddPost>
+       Users: {Users.map((user)=>{return <div key={user._id}> {user.username}</div>})}
       </header>
     </div>
   );

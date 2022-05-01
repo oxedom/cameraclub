@@ -18,11 +18,14 @@ const login = (username, password) => {
     })
     .then((response,err) => {
       if (err){
-        return (err)
+        return (err, console.log(err + "error here in 22"))
       }
-      else if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data))
-        console.log(response.data);
+      else if (response.data.token) {
+        console.log(response + 1)
+        localStorage.setItem("user", JSON.stringify(response.data.user))
+        localStorage.setItem("token", JSON.stringify(response.data.token))
+
+        console.log(response.data.user);
       }
       return response.data;
     });
