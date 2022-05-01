@@ -1,3 +1,5 @@
+const { log } = require("console");
+const { Hash } = require("crypto");
 const User = require("../models/userModel");
 
 const getAllUsers = () => {
@@ -18,6 +20,18 @@ const getUserById = (id) => {
       if (err) {
         reject(err);
       } else {
+         let resp = data 
+         
+        //  delete resp.hash
+        //   delete resp.salt 
+        //   resp.username = "DEBUG"
+        //   console.log(data)
+        //   console.log(resp);
+        // resolve(resp)
+
+        //fix this
+        data.hash = ""
+        data.salt = ""
         resolve(data);
       }
     });
