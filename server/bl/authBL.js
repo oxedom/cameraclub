@@ -5,24 +5,28 @@ const utils = require("../lib/utlis")
 const login = (loginObj) => {
     return new Promise ((resolve, reject)=> {
     User.findOne({ username: loginObj.username }, (err, user) => {
-        if(err) { reject(err)}
+        if(err) { 
+          console.log(err)
+          reject(err)}
         else {
-        const isValid = utils.validPassword(loginObj.password,user.hash, user.salt);
-        
+          console.log(loginObj)
+          let password = toString(loginObj.password)
+          let hash = user.hash
+          let salt = user.salt
+        const isValid = utils.validPassword(password,hash,salt);
         if (isValid) {
+          
             const tokenObject = utils.issueJWT(user);
             resolve({ 
                 success: true,  
                 user: user, token: 
                 tokenObject.token,expiresIn:
-                 tokenObject.expires, });
+                 tokenObject.expires, },console.log(hash,salt));
           } else {
+
             resolve({ success: false, msg: "you have entered the wrong password" });
           }}
     })
-    .catch((err) => {
-      next(err);
-    });
 
     })
     
@@ -31,12 +35,13 @@ const login = (loginObj) => {
 const register = (registerObj) => {
 
     return new Promise((resolve, reject) => {
-
-    const saltHash = utils.genPassword(registerObj.password);
-    const salt = saltHash.salt;
+    const password = toString(registerObj.password)
+    const saltHash = utils.genPassword(password);
+    console.log("salthash: "+ saltHash)
+    const salt  = saltHash.salt;
     const hash = saltHash.hash;
     const date = new Date().getTime() 
-
+      console.log(hash,salt)
     const newUser = new User({
       username: registerObj.username,
       hash: hash,
@@ -49,7 +54,7 @@ const register = (registerObj) => {
     try {
       newUser.save().then((user) => {
         const jwt = utils.issueJWT(user);
-   
+        console.log("New User Created: " + user, user.hash, user.salt )
         resolve({
           success: true,
           user: user,
