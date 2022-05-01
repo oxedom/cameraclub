@@ -5,7 +5,19 @@ import AddPost from "./AddPost";
 
 const Home = () => {
   const [content, setContent] = useState("");
-
+  client
+  .query({
+    query: gql`
+    query{
+      posts {
+        id
+        text
+      } 
+      }
+      
+    `
+  })
+  .then(result => console.log(result))
   useEffect(() => {
     UserService.getPublicContent().then(
       (response) => {
@@ -26,6 +38,7 @@ const Home = () => {
     <div className="container">
       <header className="jumbotron">
         <h3>{content}</h3>
+        <Post> </Post>
         <AddPost></AddPost>
       </header>
     </div>
