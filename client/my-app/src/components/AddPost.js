@@ -1,5 +1,8 @@
 const AddPost = () => {
 
+
+
+
     return ( <div>  
         <form>
         <input type="text"> </input> 
