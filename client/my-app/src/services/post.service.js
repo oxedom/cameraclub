@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { useMutation,gql } from "@apollo/client";
 
 
 
@@ -20,4 +20,7 @@ const GET_ALLPOST = gql`
     
 }` 
 
-export default (GET_ALLPOST)
+
+
+
+export default GET_ALLPOST

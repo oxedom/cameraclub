@@ -31,3 +31,29 @@ label {
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.postLike{
+  width: auto;
+  min-height: 30px;
+  
+  
+  background-color: bisque;
+}
+
+.mainPost{
+  
+    display: flex;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    padding-left: 90px;
+    padding-right: 90px;
+  
+}
+
+.postComment{
+  display: flex;
+  justify-content: space-between;
+}

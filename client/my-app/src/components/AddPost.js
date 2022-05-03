@@ -1,16 +1,9 @@
-const AddPost = () => {
+import React from 'react'
 
-
-
-
-    return ( <div>  
-        <form>
-        <input type="text"> </input> 
-        <button onClick={console.log("Allo WOlrd")}> Add post </button>
-
-        </form>
-    </div> );
+function AddPost() {
+  return (
+    <div>AddPost</div>
+  )
 }
- 
-export default AddPost;<div>    
-</div>
+
+export default AddPost
