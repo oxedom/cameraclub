@@ -21,25 +21,26 @@ function AddPost() {
         id: ""
         
     })
-    const [addPost] = useMutation(CREATE_POST_MUTATION , {
+    const [addPost,{data, loading, error}] = useMutation(CREATE_POST_MUTATION , {
         variables: {
             userid : String, 
             text: String
         
         }
       });
-
+    if (loading) return 'Submitting...';
+    if (error) return `Submission error! ${error.message}`;
+    if (data) return 'yes'
     return (
     <div className='card'>
-      POST DIV
         <form onSubmit={(e)=>{e.preventDefault();addPost({variables: {userid: currentUser.id, text: commentState.text}})}}> 
             <div><input value={commentState.text} onChange={(e)=>setCommentState({...commentState,text : e.target.value})} type="text"
-            placeholder="Comment this Post"/></div>
-            <button type="submit">Submit</button>
+            placeholder="Write a Post..."/></div>
+            <button type="submit">Post</button>
         </form>
-        POST END
     </div>
   )
+
 }
 
 export default AddPost
