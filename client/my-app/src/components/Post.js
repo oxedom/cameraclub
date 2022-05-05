@@ -1,15 +1,12 @@
 import React, { useState, useEffect} from "react";
 import GET_ALLPOST from "../services/post.service";
 import { useQuery } from "@apollo/client";
-import { CSSProperties } from "react";
+
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+
 import UserService from "../services/user.service";
 import AddComment from './AddComment'
+
 
 function Post() {
 
@@ -18,6 +15,7 @@ const [Users, setUsers] = useState([])
         UserService.getPublicContent().then(
           (response) => {
             setUsers(response.data)
+            console.log(Users)
             ;
           },
           (error) => {
@@ -32,6 +30,7 @@ const [Users, setUsers] = useState([])
       });
     
   const { loading, error, data } = useQuery(GET_ALLPOST);
+
   if (loading) return <p>{loading}</p>;
   if (error) return <p>{error} </p>;
 
@@ -47,12 +46,13 @@ const [Users, setUsers] = useState([])
             Post ID : {Post.id} + USER ID :{Post.userid}
             <div>
               {data.comments
-                .filter((comment) => comment.postid === Post.id).filter((comment, index)=> index < 4)
+                .filter((comment) => comment.postid === Post.id)
                 .map((comment,index) => {
-                  return <div className="postComment" key={index}>COMMENT : {comment.text}<div className="postLike" >LIKE 0 {comment.like}</div></div>;
-                })}
+                  return <div className="postComment" key={comment.id}>
+                      {Users.filter((user)=> user._id === comment.userid).map((User)=>{return <h3 key={comment.id}>{User.username}{User.email}{User._id}</h3>})}: {comment.text}<div className="postLike" >LIKE 0 {comment.like}</div>
+                  </div>})}
             </div>
-            <AddComment sx={{marginBottom: 2, marginTop: 2, minHeight: 50}}></AddComment>
+            <AddComment name={Post.id}></AddComment>
           </Card>
         );
       })}

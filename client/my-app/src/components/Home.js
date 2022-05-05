@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserService from "../services/user.service";
 import Post from './Post'
+import AddPost from "./AddPost";
 const Home = () => {
   
   const [Users, setUsers] = useState([]);
@@ -27,7 +28,7 @@ const Home = () => {
     <div className="container">
       <header className="jumbotron">
        Users: {Users.map((user)=>{return <div key={user._id}> {user.username}</div>})}
-      </header>
+      </header><AddPost/>
       <Post></Post>
     </div>
   );
